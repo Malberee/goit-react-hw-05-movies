@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes, { func } from 'prop-types'
 import { getTrending } from '../../services/getTrending'
-import { HomeWrapper } from './Home.styled'
+import { HomeWrapper, MoviesList, MoviesItem } from './Home.styled'
 
 const Home = () => {
 	const [trending, setTrending] = useState()
@@ -11,21 +11,27 @@ const Home = () => {
 		async function fetchData() {
 			const films = await getTrending()
 			setTrending(films)
-			console.log(films)
 		}
 		fetchData()
 	}, [])
 
 	return (
 		<HomeWrapper>
-			<ul>
+			<MoviesList>
 				{trending &&
-					trending.map(({ title, id }) => (
-						<li key={id}>
-							<Link to={`${id}`}>{title}</Link>
-						</li>
+					trending.map(({ title, id, poster_path }) => (
+						<MoviesItem key={id}>
+							<Link to={`/movies/${id}`}>
+								<img
+									src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+									alt="movie poster"
+									width="200"
+								/>
+								{title}
+							</Link>
+						</MoviesItem>
 					))}
-			</ul>
+			</MoviesList>
 		</HomeWrapper>
 	)
 }
