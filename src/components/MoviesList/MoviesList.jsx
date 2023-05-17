@@ -22,7 +22,10 @@ const MoviesList = ({ movies, fromPage }) => {
 	)
 }
 
-MoviesList.propTypes = {}
+MoviesList.propTypes = {
+	movies: PropTypes.array.isRequired,
+	fromPage: PropTypes.string.isRequired
+}
 
 MoviesList.defaultProps = {}
 
