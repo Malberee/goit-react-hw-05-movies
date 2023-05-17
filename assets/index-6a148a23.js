@@ -1,4 +1,4 @@
-import{s as ut,b as bs,c as Ws,r as Te,j as ee,F as Pt,a as N,L as Qe,O as Nt,d as Ps}from"./index-2df86a3c.js";import{g as Ns}from"./getDetails-7871b359.js";import"./axios-4a70c6fc.js";//! moment.js
+import{s as ut,b as bs,c as Ws,r as Te,j as ee,F as Pt,a as N,L as Qe,O as Nt,d as Ps}from"./index-a39aa648.js";import{g as Ns}from"./getDetails-7871b359.js";import"./axios-4a70c6fc.js";//! moment.js
 //! version : 2.29.4
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT

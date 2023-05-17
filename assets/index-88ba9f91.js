@@ -1,4 +1,4 @@
-import{s as e,c as f,r as a,a as s,j as m}from"./index-2df86a3c.js";import{a as u}from"./getDetails-7871b359.js";import"./axios-4a70c6fc.js";const g=e.div``,h=e.ul`
+import{s as e,c as f,r as a,a as s,j as m}from"./index-a39aa648.js";import{a as u}from"./getDetails-7871b359.js";import"./axios-4a70c6fc.js";const g=e.div``,h=e.ul`
 	padding: 60px 0px;
 	display: flex;
     justify-content: center;
