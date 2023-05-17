@@ -1,4 +1,4 @@
-import{s as e,u,r as d,j as l,a as r,O as m}from"./index-e895e0a4.js";import{a as x}from"./axios-4a70c6fc.js";import{M as g}from"./MoviesList-55d3d5f3.js";const v="3cfc4cc3ed7c09ed117ed148c7a04c75",y=async s=>{const t=await x.get(`https://api.themoviedb.org/3/search/movie?api_key=${v}&query=${s}`);return console.log(t.data.results),t.data.results},S=e.div``,b=e.form``,w=e.input`
+import{s as e,u,r as d,j as l,a as r,O as m}from"./index-761f14ea.js";import{a as x}from"./axios-4a70c6fc.js";import{M as g}from"./MoviesList-e85539d2.js";const v="3cfc4cc3ed7c09ed117ed148c7a04c75",y=async s=>{const t=await x.get(`https://api.themoviedb.org/3/search/movie?api_key=${v}&query=${s}`);return console.log(t.data.results),t.data.results},S=e.div``,b=e.form``,w=e.input`
 	padding: 10px;
 	width: 300px;
 	border-radius: 10px 0px 0px 10px;
