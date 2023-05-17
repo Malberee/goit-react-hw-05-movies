@@ -1,33 +1,42 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import PropTypes, { func } from 'prop-types'
+import { Oval } from 'react-loader-spinner'
 import { getMovies } from '../../services/getMovies'
+import MoviesList from '../../components/MoviesList'
 import {
 	MoviesWrapper,
 	SearchForm,
 	SearchInput,
-    SubmitSearchBtn,
-    MoviesList,
-    MoviesItem
+	SubmitSearchBtn,
 } from './Movies.styled'
 
 const Movies = () => {
-    const [query, setQuery] = useState('')
-    const [movies, setMovies] = useState()
+	const [searchParams, setSearchParams] = useSearchParams()
+	// const [query, setQuery] = useState('')
+	const [movies, setMovies] = useState()
+	const [isLoading, setIsLoading] = useState(false)
 
-    const submitSearchHandler = (e) => {
-        e.preventDefault()
-        console.log(query)
-        async function fetchData() {
-            const moviesList = await getMovies(query)
-            setMovies(moviesList)
-        }
-        fetchData()
+	const submitSearchHandler = (e) => {
+		e.preventDefault()
+		e.currentTarget.reset()
+		async function fetchData() {
+			try {
+				setIsLoading(true)
+				const moviesList = await getMovies(searchParams.get('q'))
+				setMovies(moviesList)
+			} catch (err) {
+				console.log(err)
+			} finally {
+				setIsLoading(false)
+			}
+		}
+		fetchData()
 	}
 
 	const changeSearchHandler = (e) => {
-        const value = e.target.value
-		setQuery(value)
+		const value = e.target.value
+		setSearchParams({q: value})
 	}
 
 	return (
@@ -36,21 +45,27 @@ const Movies = () => {
 				<SearchInput type="text" onChange={changeSearchHandler} />
 				<SubmitSearchBtn type="submit">Search</SubmitSearchBtn>
 			</SearchForm>
-			<MoviesList>
-				{movies &&
-					movies.map(({ title, id, poster_path }) => (
-						<MoviesItem key={id}>
-							<Link to={`/movies/${id}`}>
-								<img
-									src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-									alt="movie poster"
-									width="200"
-								/>
-								{title}
-							</Link>
-						</MoviesItem>
-					))}
-			</MoviesList>
+			{movies && <MoviesList movies={movies} fromPage="/movies"/>}
+			{isLoading && (
+				<Oval
+					height={80}
+					width={80}
+					color="#ffffff"
+					wrapperStyle={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						width: '100%',
+						height: '100vh',
+					}}
+					wrapperClass=""
+					visible={true}
+					ariaLabel="oval-loading"
+					secondaryColor="#ffffff"
+					strokeWidth={2}
+					strokeWidthSecondary={2}
+				/>
+			)}
 		</MoviesWrapper>
 	)
 }

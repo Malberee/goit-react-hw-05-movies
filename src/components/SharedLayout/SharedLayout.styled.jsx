@@ -13,7 +13,9 @@ export const Navigation = styled.nav`
 `
 
 export const NavigationLink = styled(NavLink)`
+transition: transform 100ms linear;
     &.active {
         color: white;
+        transform: scale(1.1);
     }
 `

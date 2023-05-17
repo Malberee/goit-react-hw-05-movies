@@ -1,37 +1,52 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Oval } from 'react-loader-spinner'
 import PropTypes, { func } from 'prop-types'
+import { HomeWrapper } from './Home.styled'
+import MoviesList from '../../components/MoviesList'
 import { getTrending } from '../../services/getTrending'
-import { HomeWrapper, MoviesList, MoviesItem } from './Home.styled'
 
 const Home = () => {
 	const [trending, setTrending] = useState()
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		async function fetchData() {
-			const films = await getTrending()
-			setTrending(films)
+			try {
+				setIsLoading(true)
+				const movies = await getTrending()
+				setTrending(movies)
+			} catch (err) {
+				console.log(err)
+			} finally {
+				setIsLoading(false)
+			}
 		}
 		fetchData()
 	}, [])
 
 	return (
 		<HomeWrapper>
-			<MoviesList>
-				{trending &&
-					trending.map(({ title, id, poster_path }) => (
-						<MoviesItem key={id}>
-							<Link to={`/movies/${id}`}>
-								<img
-									src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-									alt="movie poster"
-									width="200"
-								/>
-								{title}
-							</Link>
-						</MoviesItem>
-					))}
-			</MoviesList>
+			{trending && <MoviesList movies={trending} fromPage="/" />}
+			{isLoading && (
+				<Oval
+					height={80}
+					width={80}
+					color="#ffffff"
+					wrapperStyle={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						width: '100%',
+						height: '100vh',
+					}}
+					wrapperClass=""
+					visible={true}
+					ariaLabel="oval-loading"
+					secondaryColor="#ffffff"
+					strokeWidth={2}
+					strokeWidthSecondary={2}
+				/>
+			)}
 		</HomeWrapper>
 	)
 }

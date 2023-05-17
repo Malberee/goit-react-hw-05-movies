@@ -1,12 +1,46 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { ReviewsWrapper } from './Reviews.styled'
+import { useParams } from 'react-router-dom'
+import { Oval } from 'react-loader-spinner'
+import { getReviews } from '../../services/getDetails'
+import { ReviewsWrapper, ReviewsList, ReviewsItem } from './Reviews.styled'
 
-const Reviews = () => (
-    <ReviewsWrapper>
-        Reviews Component
-    </ReviewsWrapper>
-)
+const Reviews = () => {
+	const { movieId } = useParams()
+	const [isLoading, setIsLoading] = useState(false)
+	const [reviews, setReviews] = useState()
+
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				setIsLoading(true)
+				const newReviews = await getReviews(movieId)
+				console.log(newReviews)
+				setReviews(newReviews)
+			} catch (err) {
+				console.log(err)
+			} finally {
+				setIsLoading(false)
+			}
+		}
+		fetchData()
+	}, [])
+
+	return (
+		<ReviewsWrapper>
+			{reviews ? (
+				<ReviewsList>
+					{reviews.map(({ id, author, content }) => (
+						<ReviewsItem key={id}>
+							<h3>{author}</h3>
+							<p>{content}</p>
+						</ReviewsItem>
+					))}
+				</ReviewsList>
+			) : <p>We don`t have any reviews for this movie.</p>}
+		</ReviewsWrapper>
+	)
+}
 
 Reviews.propTypes = {}
 
