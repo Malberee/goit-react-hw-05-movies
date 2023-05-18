@@ -28,7 +28,7 @@ const MovieDetails = () => {
 				setIsLoading(true)
 				const details = await getDetails(movieId)
 				setMovieDetails(details)
-			} catch (erro) {
+			} catch (err) {
 				console.log(err)
 			} finally {
 				setIsLoading(false)

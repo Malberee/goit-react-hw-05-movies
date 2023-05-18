@@ -20,7 +20,7 @@ const Movies = () => {
 	const q = searchParams.get('q')
 
 	useEffect(() => {
-		if(!q) return
+		if (!q) return
 		async function fetchData() {
 			try {
 				setIsLoading(true)
@@ -47,7 +47,7 @@ const Movies = () => {
 	return (
 		<MoviesWrapper>
 			<SearchForm onSubmit={submitSearchHandler}>
-				<SearchInput type="text" name="search"/>
+				<SearchInput type="text" name="search" value={q} />
 				<SubmitSearchBtn type="submit">Search</SubmitSearchBtn>
 			</SearchForm>
 			{movies && <MoviesList movies={movies} />}
