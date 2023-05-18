@@ -26,7 +26,7 @@ const Home = () => {
 
 	return (
 		<HomeWrapper>
-			{trending && <MoviesList movies={trending} fromPage="/" />}
+			{trending && <MoviesList movies={trending} />}
 			{isLoading && (
 				<Oval
 					height={80}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PropTypes, { func } from 'prop-types'
 import { Oval } from 'react-loader-spinner'
@@ -17,13 +17,14 @@ const Movies = () => {
 	const [movies, setMovies] = useState()
 	const [isLoading, setIsLoading] = useState(false)
 
-	const submitSearchHandler = (e) => {
-		e.preventDefault()
-		e.currentTarget.reset()
+	const q = searchParams.get('q')
+
+	useEffect(() => {
+		if(!q) return
 		async function fetchData() {
 			try {
 				setIsLoading(true)
-				const moviesList = await getMovies(searchParams.get('q'))
+				const moviesList = await getMovies(q)
 				setMovies(moviesList)
 			} catch (err) {
 				console.log(err)
@@ -32,20 +33,24 @@ const Movies = () => {
 			}
 		}
 		fetchData()
-	}
+	}, [q])
 
-	const changeSearchHandler = (e) => {
-		const value = e.target.value
-		setSearchParams({q: value})
+	const submitSearchHandler = (e) => {
+		e.preventDefault()
+		const q = e.target.search.value.trim().toLowerCase()
+
+		if (!q) return
+
+		setSearchParams({ q })
 	}
 
 	return (
 		<MoviesWrapper>
 			<SearchForm onSubmit={submitSearchHandler}>
-				<SearchInput type="text" onChange={changeSearchHandler} />
+				<SearchInput type="text" name="search"/>
 				<SubmitSearchBtn type="submit">Search</SubmitSearchBtn>
 			</SearchForm>
-			{movies && <MoviesList movies={movies} fromPage="/movies"/>}
+			{movies && <MoviesList movies={movies} />}
 			{isLoading && (
 				<Oval
 					height={80}

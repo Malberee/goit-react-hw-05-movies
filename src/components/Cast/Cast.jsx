@@ -13,7 +13,6 @@ const Cast = () => {
 			try {
 				setIsLoading(true)
 				const newCast = await getCast(movieId)
-				console.log(newCast)
 				setCast(newCast)
 			} catch (err) {
 				console.log(err)
@@ -26,12 +25,16 @@ const Cast = () => {
 
 	return (
 		<CastWrapper>
-			{cast ? (
+			{cast && cast.length ? (
 				<CastList>
-					{cast.map(({ character, id, original_name, profile_path }) => (
+					{cast.map(({ id, original_name, profile_path }) => (
 						<CastItem key={id}>
 							<img
-								src={`https://image.tmdb.org/t/p/w500${profile_path}`}
+								src={
+									profile_path === null
+										? 'https://www.metmuseum.org/content/img/placeholders/NoPosterAvailable_placeholder_160x220.png'
+										: `https://image.tmdb.org/t/p/w500${profile_path}`
+								}
 								alt="actor"
 								width="200"
 							/>
@@ -39,7 +42,9 @@ const Cast = () => {
 						</CastItem>
 					))}
 				</CastList>
-			) : <p>Error 404. Not found. </p>}
+			) : (
+				<p>Error 404. Not found. </p>
+			)}
 		</CastWrapper>
 	)
 }

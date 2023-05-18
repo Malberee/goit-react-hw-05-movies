@@ -13,7 +13,6 @@ export const getReviews = async (movieId) => {
   const reviews = await axios.get(
 		`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${API_KEY}`
   )
-  console.log(reviews.data.results)
 	return reviews.data.results
 }
 
@@ -21,6 +20,5 @@ export const getCast = async (movieId) => {
   const cast = await axios.get(
 		`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`
 	)
-	console.log(cast.data.cast)
 	return cast.data.cast
 }

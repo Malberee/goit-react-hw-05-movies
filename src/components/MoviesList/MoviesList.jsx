@@ -1,16 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { MoviesListWrapper, MoviesItem } from './MoviesList.styled'
 
-const MoviesList = ({ movies, fromPage }) => {
+const MoviesList = ({ movies }) => {
+	const location = useLocation()
 	return (
 		<MoviesListWrapper>
 			{movies.map(({ title, id, poster_path }) => (
 				<MoviesItem key={id}>
-					<Link to={`/movies/${id}`} state={{from: fromPage}}>
+					<Link to={`/movies/${id}`} state={{ from: location }}>
 						<img
-							src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+							src={
+								poster_path === null
+									? 'https://www.metmuseum.org/content/img/placeholders/NoPosterAvailable_placeholder_160x220.png'
+									: `https://image.tmdb.org/t/p/w500${poster_path}`
+							}
 							alt="movie poster"
 							width="200"
 						/>
@@ -24,7 +29,6 @@ const MoviesList = ({ movies, fromPage }) => {
 
 MoviesList.propTypes = {
 	movies: PropTypes.array.isRequired,
-	fromPage: PropTypes.string.isRequired
 }
 
 MoviesList.defaultProps = {}

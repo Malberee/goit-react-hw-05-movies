@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useRef } from 'react'
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom'
 import { Oval } from 'react-loader-spinner'
 import PropTypes from 'prop-types'
@@ -12,7 +12,7 @@ import {
 
 const MovieDetails = () => {
 	const location = useLocation()
-	const backLinkHref = location.state?.from ?? '/movies'
+	const backLinkHref = useRef(location.state?.from ?? '/movies')
 	const { movieId } = useParams()
 	const [movieDetails, setMovieDetails] = useState()
 	const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +27,6 @@ const MovieDetails = () => {
 			try {
 				setIsLoading(true)
 				const details = await getDetails(movieId)
-				console.log(details)
 				setMovieDetails(details)
 			} catch (erro) {
 				console.log(err)
@@ -42,10 +41,14 @@ const MovieDetails = () => {
 		<>
 			{movieDetails && (
 				<>
-					<Link to={backLinkHref}>Go back</Link>
+					<Link to={backLinkHref.current}>Go back</Link>
 					<MovieDetailsWrapper>
 						<img
-							src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+							src={
+								movieDetails.poster_path === null
+									? 'https://www.metmuseum.org/content/img/placeholders/NoPosterAvailable_placeholder_160x220.png'
+									: `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+							}
 							alt=""
 							width="300"
 						/>

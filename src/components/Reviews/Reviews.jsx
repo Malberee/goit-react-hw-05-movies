@@ -15,7 +15,6 @@ const Reviews = () => {
 			try {
 				setIsLoading(true)
 				const newReviews = await getReviews(movieId)
-				console.log(newReviews)
 				setReviews(newReviews)
 			} catch (err) {
 				console.log(err)
@@ -28,7 +27,7 @@ const Reviews = () => {
 
 	return (
 		<ReviewsWrapper>
-			{reviews ? (
+			{reviews && reviews.length ? (
 				<ReviewsList>
 					{reviews.map(({ id, author, content }) => (
 						<ReviewsItem key={id}>

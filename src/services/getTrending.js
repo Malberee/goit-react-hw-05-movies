@@ -6,6 +6,5 @@ export const getTrending = async () => {
 	const trending = await axios.get(
 		`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
   )
-  console.log(trending.data.results)
     return trending.data.results
 }
