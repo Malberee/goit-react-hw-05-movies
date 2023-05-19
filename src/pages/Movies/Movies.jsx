@@ -47,7 +47,7 @@ const Movies = () => {
 	return (
 		<MoviesWrapper>
 			<SearchForm onSubmit={submitSearchHandler}>
-				<SearchInput type="text" name="search" value={q} />
+				<SearchInput type="text" name="search" defaultValue={q} />
 				<SubmitSearchBtn type="submit">Search</SubmitSearchBtn>
 			</SearchForm>
 			{movies && <MoviesList movies={movies} />}
