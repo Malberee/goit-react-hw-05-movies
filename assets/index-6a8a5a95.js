@@ -1,4 +1,4 @@
-import{s as o,c as p,r as a,a as s,j as v}from"./index-a444812d.js";import{b as f}from"./getDetails-c1e4f559.js";import"./axios-4a70c6fc.js";const h=o.div``,m=o.ul``,w=o.li`
+import{s as o,c as p,r as a,a as s,j as v}from"./index-0e4370c9.js";import{b as f}from"./getDetails-c1e4f559.js";import"./axios-4a70c6fc.js";const h=o.div``,m=o.ul``,w=o.li`
 	text-align: left;
 	&:not(:last-child) {
 		margin-bottom: 30px;
